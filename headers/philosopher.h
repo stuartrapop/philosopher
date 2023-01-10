@@ -6,7 +6,7 @@
 /*   By: srapopor <srapopor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 18:33:49 by srapopor          #+#    #+#             */
-/*   Updated: 2023/01/10 15:27:18 by srapopor         ###   ########.fr       */
+/*   Updated: 2023/01/10 17:15:03 by srapopor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ typedef struct s_philosopher {
 	int						start_eating;
 	int						start_sleeping;
 	int						start_thinking;
-	int						fork_in_use;
 	pthread_t				thread;
-	pthread_mutex_t			mutex;
+	pthread_mutex_t			fork;
 	t_game					*game;
 	struct s_philosopher	*philosophers;
 

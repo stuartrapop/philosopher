@@ -6,7 +6,7 @@
 /*   By: srapopor <srapopor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:57:50 by srapopor          #+#    #+#             */
-/*   Updated: 2023/01/10 16:36:09 by srapopor         ###   ########.fr       */
+/*   Updated: 2023/01/10 17:18:11 by srapopor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,24 @@
 
 int	philosopher_eat(t_philosopher *philosopher)
 {
+	struct timeval	now;
+	int				fork1;
+	int				fork2;
+	int				start_ms;
+
 	if (philosopher->number == 0 && philosopher->game->number_philosophers == 1)
 		return (1);
+	if (philosopher->number == 0)
+		fork1 = philosopher->game->number_philosophers;
 	else
-	{
-		if (philosopher->number == 0)
-			pthread_mutex_lock(&(philosopher->philosophers[0]));
-			pthread_mutex_lock(&(philosopher->philosophers[philosopher->game->number_philosophers]));
-			
-
-	}
+		fork1 = philosopher->number - 1;
+	pthread_mutex_lock(&(philosopher->philosophers[fork1].fork));
+	pthread_mutex_lock(&(philosopher->philosophers[fork2].fork));
+	gettimeofday(&now, NULL);
+	start_ms = time_ms(now);
+	philosopher->start_eating = start_ms;
+	pthread_mutex_unlock(&(philosopher->philosophers[fork1].fork));
+	pthread_mutex_unlock(&(philosopher->philosophers[fork2].fork));
 }
 
 void	*start_philosopher(void *arg)
@@ -53,7 +61,7 @@ int	ft_init_philosophers(t_philosopher *philosophers, t_game *game)
 		philosophers[index].fork_in_use = 0;
 		philosophers[index].game = game;
 		philosophers[index].philosophers = philosophers;
-		pthread_mutex_init(&(philosophers[index].mutex), NULL);
+		pthread_mutex_init(&(philosophers[index].fork), NULL);
 		pthread_create(&(philosophers[index].thread),
 			NULL, start_philosopher, &(philosophers[index]));
 		usleep(300);
