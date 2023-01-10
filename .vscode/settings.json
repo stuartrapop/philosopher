@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "*.ejs": "plaintext",
+    "chrono": "c"
+  }
+}
