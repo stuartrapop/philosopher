@@ -6,7 +6,7 @@
 /*   By: srapopor <srapopor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:57:50 by srapopor          #+#    #+#             */
-/*   Updated: 2023/01/10 17:18:11 by srapopor         ###   ########.fr       */
+/*   Updated: 2023/01/16 11:35:16 by srapopor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,24 @@ int	philosopher_eat(t_philosopher *philosopher)
 	int				fork2;
 	int				start_ms;
 
-	if (philosopher->number == 0 && philosopher->game->number_philosophers == 1)
-		return (1);
 	if (philosopher->number == 0)
 		fork1 = philosopher->game->number_philosophers;
 	else
 		fork1 = philosopher->number - 1;
-	pthread_mutex_lock(&(philosopher->philosophers[fork1].fork));
-	pthread_mutex_lock(&(philosopher->philosophers[fork2].fork));
-	gettimeofday(&now, NULL);
-	start_ms = time_ms(now);
-	philosopher->start_eating = start_ms;
-	pthread_mutex_unlock(&(philosopher->philosophers[fork1].fork));
-	pthread_mutex_unlock(&(philosopher->philosophers[fork2].fork));
+	fork2 = philosopher->number;
+	while (1)
+	{
+		pthread_mutex_lock(&(philosopher->philosophers[fork1].fork));
+		pthread_mutex_lock(&(philosopher->philosophers[fork2].fork));
+		gettimeofday(&now, NULL);
+		start_ms = time_ms(now);
+		philosopher->start_eating = start_ms;
+		usleep(philosopher->game->time_to_eat * 1000);
+		pthread_mutex_unlock(&(philosopher->philosophers[fork1].fork));
+		pthread_mutex_unlock(&(philosopher->philosophers[fork2].fork));
+		usleep(philosopher->game->time_to_sleep * 1000);
+	}
+	return (0);
 }
 
 void	*start_philosopher(void *arg)
@@ -58,7 +63,6 @@ int	ft_init_philosophers(t_philosopher *philosophers, t_game *game)
 		philosophers[index].start_eating = 0;
 		philosophers[index].start_sleeping = 0;
 		philosophers[index].start_thinking = 0;
-		philosophers[index].fork_in_use = 0;
 		philosophers[index].game = game;
 		philosophers[index].philosophers = philosophers;
 		pthread_mutex_init(&(philosophers[index].fork), NULL);
