@@ -5,7 +5,8 @@ SRCS_PATH_MAIN = ./main
 
 OBJS_PATH = ./
 
-SRCS_NAME_MAIN = philosopher.c \
+SRCS_NAME_MAIN = philosopher_1.c \
+					philosopher_2.c \
 					utils.c \
 					string.c
 
@@ -19,7 +20,7 @@ SRCS = $(addprefix $(SRCS_PATH_MAIN)/,$(SRCS_NAME_MAIN))
 
 HEADER_DIR = ./headers
 
-FLAG = -Wall -Wextra -Werror -I$(HEADER_DIR)
+FLAG = -Wall -Wextra -Werror -I$(HEADER_DIR) -g3 -fsanitize=address 
 
 CC = GCC $(FLAG)
 

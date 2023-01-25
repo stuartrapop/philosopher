@@ -6,19 +6,19 @@
 /*   By: srapopor <srapopor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:01:34 by srapopor          #+#    #+#             */
-/*   Updated: 2023/01/25 09:35:53 by srapopor         ###   ########.fr       */
+/*   Updated: 2023/01/25 13:30:33 by srapopor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-int	time_ms(struct timeval time_value, struct timeval time)
+int	time_ms(struct timeval time_value, struct timeval s_time)
 {
 	int	seconds;
 	int	microsec;
 
-	seconds = time_value.tv_sec - time.tv_sec;
-	microsec = time_value.tv_usec - time.tv_usec;
+	seconds = time_value.tv_sec - s_time.tv_sec;
+	microsec = time_value.tv_usec - s_time.tv_usec;
 	return ((int)((seconds) * 1000 + (microsec) / 1000));
 }
 

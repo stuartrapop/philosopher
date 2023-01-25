@@ -6,7 +6,7 @@
 /*   By: srapopor <srapopor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 18:33:49 by srapopor          #+#    #+#             */
-/*   Updated: 2023/01/25 09:35:55 by srapopor         ###   ########.fr       */
+/*   Updated: 2023/01/25 15:41:34 by srapopor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,14 @@
 # include <unistd.h>
 # include <stdarg.h>
 
-enum e_state{eating, thinking, sleeping};
-
 typedef struct s_game {
-	int				current_eating;
 	int				number_phs;
-	struct timeval	time;
+	struct timeval	start;
 	int				t_die;
 	int				t_eat;
 	int				t_sleep;
 	int				num_eat;
+	int				is_over;
 	pthread_t		monitor_thread;
 	pthread_mutex_t	print;
 	pthread_mutex_t	monitor;
@@ -37,15 +35,15 @@ typedef struct s_game {
 }	t_game;
 
 typedef struct s_ph {
-	enum e_state			state;
-	int						number;
-	int						eating;
-	int						sleeping;
-	int						thinking;
-	pthread_t				thread;
-	pthread_mutex_t			fork;
-	t_game					*game;
-	struct s_ph	*phs;
+	int					num;
+	int					num_times_eaten;
+	int					eat;
+	int					sleep;
+	int					think;
+	pthread_t			thread;
+	pthread_mutex_t		fork;
+	t_game				*game;
+	struct s_ph			*phs;
 
 }	t_ph;
 
@@ -57,7 +55,11 @@ void	ft_putchar(char c);
 void	ft_putstr(char *str);
 void	ft_printf(const char *formatted_string, ...);
 void	ft_putnum(int num);
-void	pri_mut(pthread_mutex_t *mutex, \
-					const char *formatted_string, ...);
+void	pri_mut(pthread_mutex_t *mutex, const char *formatted_string, ...);
+int		get_fork(t_ph *ph, int fork);
+int		eat_and_release(t_ph *ph, int fork1, int fork2);
+int		ph_sleep(t_ph *ph);
+int		ph_life_cycle(t_ph *ph);
+void	*ph(void *arg);
 
 #endif

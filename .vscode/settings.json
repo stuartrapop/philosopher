@@ -1,6 +1,8 @@
 {
   "files.associations": {
     "*.ejs": "plaintext",
-    "chrono": "c"
+    "chrono": "c",
+    "__locale": "c",
+    "__mutex_base": "c"
   }
 }
