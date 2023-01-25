@@ -6,15 +6,20 @@
 /*   By: srapopor <srapopor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:01:34 by srapopor          #+#    #+#             */
-/*   Updated: 2023/01/10 14:08:25 by srapopor         ###   ########.fr       */
+/*   Updated: 2023/01/25 09:35:53 by srapopor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-int	time_ms(struct timeval time_value)
+int	time_ms(struct timeval time_value, struct timeval time)
 {
-	return ((int)((time_value.tv_sec) * 1000 + (time_value.tv_usec) / 1000));
+	int	seconds;
+	int	microsec;
+
+	seconds = time_value.tv_sec - time.tv_sec;
+	microsec = time_value.tv_usec - time.tv_usec;
+	return ((int)((seconds) * 1000 + (microsec) / 1000));
 }
 
 int	ft_strcmp(char *s1, char *s2)
@@ -61,4 +66,29 @@ int	ft_atoi(char *str)
 		index++;
 	}
 	return (sign * number);
+}
+
+void	ft_putnum(int num)
+{
+	char	c;
+
+	if (num == -2147483648)
+	{
+		write(1, "-2147483648", 11);
+		return ;
+	}
+	if (num < 0)
+	{
+		write(1, "-", 1);
+		ft_putnum(-num);
+	}
+	else
+	{
+		if (num / 10)
+		{
+			ft_putnum(num / 10);
+		}
+		c = num % 10 + '0';
+		write(1, &c, 1);
+	}
 }
