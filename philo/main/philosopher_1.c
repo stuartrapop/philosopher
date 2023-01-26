@@ -6,7 +6,7 @@
 /*   By: srapopor <srapopor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:57:50 by srapopor          #+#    #+#             */
-/*   Updated: 2023/01/26 08:54:00 by srapopor         ###   ########.fr       */
+/*   Updated: 2023/01/26 09:23:45 by srapopor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	*game_monitor(void *arg)
 			pthread_mutex_lock(&phs[0].game->monitor);
 			phs[0].game->is_over = 1;
 			pthread_mutex_unlock(&phs[0].game->monitor);
-			usleep(2000);
+			usleep(1000);
 			pri_mut(&(phs[0].game->print), "Completed Cycles\n");
 			return ("Completed Cycles");
 		}

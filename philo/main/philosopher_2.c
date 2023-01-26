@@ -6,7 +6,7 @@
 /*   By: srapopor <srapopor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:28:03 by srapopor          #+#    #+#             */
-/*   Updated: 2023/01/26 09:18:04 by srapopor         ###   ########.fr       */
+/*   Updated: 2023/01/26 09:23:16 by srapopor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ int	eat_and_release(t_ph *ph, int fork1, int fork2)
 	while ((time_ms(now, start) - ph->eat) < ph->game->t_eat)
 		gettimeofday(&now, NULL);
 	pthread_mutex_unlock(&ph->game->monitor);
+	ph->eat = time_ms(now, start);
 	pri_mut(&(ph->game->print), "%d %d released monitor\n", ph->eat, ph->num + 1);
 	usleep(200);
 	pthread_mutex_unlock(&(ph->phs[fork1].fork));
 	pthread_mutex_unlock(&(ph->phs[fork2].fork));
+	ph->eat = time_ms(now, start);
 	pri_mut(&(ph->game->print), "%d %d released forks\n", ph->eat, ph->num + 1);
 	usleep(200);
 	return (0);
