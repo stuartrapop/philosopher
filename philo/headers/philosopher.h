@@ -6,7 +6,7 @@
 /*   By: srapopor <srapopor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 18:33:49 by srapopor          #+#    #+#             */
-/*   Updated: 2023/01/25 17:49:28 by srapopor         ###   ########.fr       */
+/*   Updated: 2023/01/26 15:56:33 by srapopor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,22 @@ typedef struct s_game {
 	int				t_eat;
 	int				t_sleep;
 	int				num_eat;
-	int				is_over;
 	pthread_t		monitor_thread;
 	pthread_mutex_t	print;
-	pthread_mutex_t	monitor;
 
 }	t_game;
 
 typedef struct s_ph {
 	int					num;
 	int					num_times_eaten;
+	pthread_mutex_t		num_eat_mutex;
 	int					eat;
 	int					sleep;
 	int					think;
 	pthread_t			thread;
 	pthread_mutex_t		fork;
 	pthread_mutex_t		eat_mutex;
+	int					stop_printing;
 	t_game				*game;
 	struct s_ph			*phs;
 
@@ -60,8 +60,9 @@ void	pri_mut(pthread_mutex_t *mutex, const char *formatted_string, ...);
 int		get_fork(t_ph *ph, int fork);
 int		eat_and_release(t_ph *ph, int fork1, int fork2);
 int		ph_sleep(t_ph *ph);
-int		ph_life_cycle(t_ph *ph);
+void	ph_life_cycle(t_ph *ph);
 void	*ph(void *arg);
 int		check_eating_time(t_ph *phs, int ph_number, int *pass_cycle_test);
+void	set_stop_printing(t_ph *phs);
 
 #endif
