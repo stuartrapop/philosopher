@@ -22,9 +22,9 @@ SRCS = $(addprefix $(SRCS_PATH_MAIN)/,$(SRCS_NAME_MAIN))
 HEADER_DIR = ./headers
 
 # FLAG = -Wall -Wextra -Werror -I$(HEADER_DIR) -g3 -fsanitize=thread
-# FLAG = -Wall -Wextra -Werror -I$(HEADER_DIR) -g3 -fsanitize=address
+FLAG = -Wall -Wextra -Werror -I$(HEADER_DIR) -g3 -fsanitize=address
 # FLAG = -Wall -Wextra -Werror -I$(HEADER_DIR) -g3 -fsanitize=undefined
-FLAG = -Wall -Wextra -Werror -I$(HEADER_DIR)
+# FLAG = -Wall -Wextra -Werror -I$(HEADER_DIR)
 
 CC = GCC $(FLAG)
 

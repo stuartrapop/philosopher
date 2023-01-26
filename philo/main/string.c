@@ -6,7 +6,7 @@
 /*   By: srapopor <srapopor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:05:04 by srapopor          #+#    #+#             */
-/*   Updated: 2023/01/25 17:48:15 by srapopor         ###   ########.fr       */
+/*   Updated: 2023/01/26 08:51:40 by srapopor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,6 @@ void	pri_mut(pthread_mutex_t *mutex, \
 		index++;
 	}
 	va_end(list);
-	usleep(20);
 	pthread_mutex_unlock(mutex);
+	usleep(20);
 }
